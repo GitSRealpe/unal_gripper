@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot name="gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:arg name="robot_namespace" default="robot"/>
+
+    <!-- Include gripper -->
+    <xacro:include filename="$(find unal_gripper)/urdf/gripper.macro.xacro"/>
+    <xacro:gripper_namespace prefix="$(arg robot_namespace)"/>
+
+</robot>

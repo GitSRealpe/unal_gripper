@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+
+<robot name="gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="gripper_namespace" params="prefix">
+
+    <!-- BASE LINK -->
+
+    <link name="${prefix}/gripper_body">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_cuerpo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="gris">
+          <color rgba="0.5 0.5 0.5 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_cuerpo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- LINKS -->
+
+    <link name="${prefix}/left_ext">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_eslabon_externo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blu">
+          <color rgba="0 0 1 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_eslabon_externo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}/left_int">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_eslabon_interno.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blug">
+          <color rgba="0 1 1 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_eslabon_interno.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}/right_ext">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_eslabon_externo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blu">
+          <color rgba="0 0 1 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_eslabon_externo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}/right_int">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_eslabon_interno.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blug">
+          <color rgba="0 1 1 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_eslabon_interno.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- FINGERS -->
+
+    <!-- LEFT FINGER -->
+
+    <link name="${prefix}/left_finger">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_dedo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="white">
+          <color rgba="1 1 1 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_dedo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- RIGHT FINGER -->
+
+    <link name="${prefix}/right_finger">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_dedo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="white">
+          <color rgba="1 1 1 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://unal_gripper/meshes/mesh_dedo.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- JOINTS -->
+
+    <!-- LINKS_BASE JOINTS -->
+
+    <joint name="${prefix}/gripper_body__left_ext" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit effort="1" lower="-0.15" upper="0.8" velocity="0.01"/>
+      <origin rpy="0 0 0" xyz="0.0 -0.046785 0.103"/>
+      <parent link="${prefix}/gripper_body"/>
+      <child link="${prefix}/left_ext"/>
+    </joint>
+
+    <joint name="${prefix}/gripper_body__left_int" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit effort="1000" lower="-3.14" upper="3.14" velocity="0.5"/>
+      <origin rpy="0 0 0" xyz="0.0 -0.026 0.115"/>
+      <parent link="${prefix}/gripper_body"/>
+      <child link="${prefix}/left_int"/>
+      <mimic joint="${prefix}/gripper_body__left_ext" multiplier="1" offset="0"/>
+    </joint>
+
+    <joint name="${prefix}/gripper_body__right_ext" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit effort="1000" lower="-3.14" upper="3.14" velocity="0.5"/>
+      <origin rpy="0 0 3.14" xyz="0 0.046785 0.103"/>
+      <parent link="${prefix}/gripper_body"/>
+      <child link="${prefix}/right_ext"/>
+      <mimic joint="${prefix}/gripper_body__left_ext" multiplier="1" offset="0"/>
+    </joint>
+
+    <joint name="${prefix}/gripper_body__right_int" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit effort="1000" lower="-3.14" upper="3.14" velocity="0.5"/>
+      <origin rpy="0 0 0" xyz="0.0 0.026 0.115"/>
+      <parent link="${prefix}/gripper_body"/>
+      <child link="${prefix}/right_int"/>
+      <mimic joint="${prefix}/gripper_body__right_ext" multiplier="-1" offset="0"/>
+    </joint>
+
+    <!-- FINGERS -->
+
+    <!-- LEFT FINGER -->
+
+    <joint name="${prefix}/left_ext__left_finger" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit effort="1000" lower="-3.14" upper="3.14" velocity="0.5"/>
+      <origin rpy="0 0 0" xyz="0 0 0.080"/>
+      <parent link="${prefix}/left_ext"/>
+      <child link="${prefix}/left_finger"/>
+      <mimic joint="${prefix}/gripper_body__left_ext" multiplier="-1" offset="0"/>
+    </joint>
+
+    <!-- RIGHT FINGER -->
+
+    <joint name="${prefix}/right_ext__right_finger" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit effort="1000" lower="-3.14" upper="3.14" velocity="0.5"/>
+      <origin rpy="0 0 0" xyz="0 0 0.080"/>
+      <parent link="${prefix}/right_ext"/>
+      <child link="${prefix}/right_finger"/>
+      <mimic joint="${prefix}/gripper_body__right_ext" multiplier="-1" offset="0"/>
+    </joint>
+
+    <!-- END - Robot description -->
+
+  </xacro:macro>
+
+
+</robot>
